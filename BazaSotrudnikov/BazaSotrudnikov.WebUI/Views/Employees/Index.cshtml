@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BazaSotrudnikov.Domain.Models.Employee>
+
+@{
+    ViewBag.Title = "Список сотрудников";
+}
+
+<h2>Список сотрудников</h2>
+
+<p>
+    @Html.ActionLink("Добавить нового сотрудника", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Father)
+        </th>        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.Name)                     
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.Name)               
+        </td>
+        <td>
+            @Html.ActionLink(item.Surname, "Details", new { id = item.Id })            
+        </td>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id = item.Id })            
+        </td>
+        <td>
+            @Html.ActionLink(item.Father, "Details", new { id = item.Id })            
+        </td>        
+        <td>             
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

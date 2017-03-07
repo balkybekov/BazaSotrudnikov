@@ -1,0 +1,64 @@
+﻿@model BazaSotrudnikov.Domain.Models.Country
+
+@{
+    ViewBag.Title = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <dt>Города страны:</dt>
+            <dd>
+                <ul id="citiesBlock">
+                    @for(int i=0; i<Model.Cities.Count; i++)
+                    {
+                       <li>
+                          <input type='text' value=@Model.Cities.ElementAt(i).Name>
+                       </li>
+                    }                    
+                </ul>
+            </dd>
+            <p><a class="addCity">Добавить новый город</a></p>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад к списку", "Index")
+</div>
+
+
+<script>
+    $(function () {
+        var i = 0;
+        $('.addCity').click(function()
+        {            
+            var html2Add= "<li>" +
+                 "<input type='text' name='NewCities[" + i + "]' />" +
+            "</li>";
+            $('#citiesBlock').append(html2Add);
+            i++;
+         })
+    })
+</script>
